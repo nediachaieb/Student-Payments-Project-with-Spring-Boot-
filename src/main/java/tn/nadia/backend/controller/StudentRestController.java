@@ -9,6 +9,7 @@ import tn.nadia.backend.entities.PaymentType;
 import tn.nadia.backend.entities.Student;
 import tn.nadia.backend.repository.PaymentRepository;
 import tn.nadia.backend.repository.StudentRepository;
+import tn.nadia.backend.service.PaymentService;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -23,23 +24,24 @@ import java.util.List;
 public class StudentRestController {
 
     // Repository pour accéder aux données des étudiants
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     // Repository pour accéder aux données des paiements
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
 
     // Service contenant la logique métier des paiements
-   // private PaymentService paymentService;
+    private final PaymentService paymentService;
 
     /**
      * Injection des dépendances via le constructeur
      */
     public StudentRestController(StudentRepository studentRepository,
-                                 PaymentRepository paymentRepository)
+                                 PaymentRepository paymentRepository,
+                                 PaymentService paymentService)
                                  {
         this.studentRepository = studentRepository;
         this.paymentRepository = paymentRepository;
-        //this.paymentService = paymentService;
+        this.paymentService = paymentService;
     }
 
     // ======================= STUDENTS ENDPOINTS =======================
@@ -109,38 +111,38 @@ public class StudentRestController {
     public List<Payment> paymentsByStaus(@RequestParam PaymentStatus status){
         return paymentRepository.findByStatus(status);
     }
-//
-//    /**
-//     * Mettre à jour le statut d'un paiement
-//     * URL : PUT /payments/{paymentId}/updateStatus?status=VALIDATED
-//     */
-//    @PutMapping("/payments/{paymentId}/updateStatus")
-//    public Payment updatePaymentStatus(@RequestParam PaymentStatus status,
-//                                       @PathVariable Long paymentId){
-//        return paymentService.updatePaymentStatus(status,paymentId);
-//    }
-//
-//    /**
-//     * Ajouter un nouveau paiement avec un fichier (PDF reçu)
-//     * URL : POST /payments
-//     * Content-Type : multipart/form-data
-//     */
-//    @PostMapping(path="/payments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public Payment savePayment(@RequestParam MultipartFile file,
-//                               double amount,
-//                               PaymentType type,
-//                               LocalDate date,
-//                               String studentCode) throws IOException {
-//
-//        return paymentService.savePayment(file,amount,type,date,studentCode);
-//    }
-//
-//    /**
-//     * Télécharger le fichier PDF associé à un paiement
-//     * URL : GET /payments/{id}/file
-//     */
-//    @GetMapping(path="payments/{id}/file",produces = MediaType.APPLICATION_PDF_VALUE)
-//    public byte[] getPaymentFile(@PathVariable Long id) throws IOException {
-//        return paymentService.getPaymentFile(id);
-//    }
+
+    /**
+     * Mettre à jour le statut d'un paiement
+     * URL : PUT /payments/{paymentId}/updateStatus?status=VALIDATED
+     */
+    @PutMapping("/payments/{paymentId}/updateStatus")
+    public Payment updatePaymentStatus(@RequestParam PaymentStatus status,
+                                       @PathVariable Long paymentId){
+        return paymentService.updatePaymentStatus(status,paymentId);
+    }
+
+    /**
+     * Ajouter un nouveau paiement avec un fichier (PDF reçu)
+     * URL : POST /payments
+     * Content-Type : multipart/form-data
+     */
+    @PostMapping(path="/payments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Payment savePayment(@RequestParam MultipartFile file,
+                               double amount,
+                               PaymentType type,
+                               LocalDate date,
+                               String studentCode) throws IOException {
+
+        return paymentService.savePayment(file,amount,type,date,studentCode);
+    }
+
+    /**
+     * Télécharger le fichier PDF associé à un paiement
+     * URL : GET /payments/{id}/file
+     */
+    @GetMapping(path="payments/{id}/file",produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getPaymentFile(@PathVariable Long id) throws IOException {
+        return paymentService.getPaymentFile(id);
+    }
 }
