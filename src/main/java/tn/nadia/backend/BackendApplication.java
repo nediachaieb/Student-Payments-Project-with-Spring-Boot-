@@ -28,42 +28,42 @@ public class BackendApplication {
 
 			// Création des étudiants
 			studentRepository.save(Student.builder()
-					.id(UUID.randomUUID().toString())
+					//.id(UUID.randomUUID().toString())
 					.code("ST005")
 					.firstName("Yassine")
 					.programId("GLSID")
 					.build());
 
 			studentRepository.save(Student.builder()
-					.id(UUID.randomUUID().toString())
+					//.id(UUID.randomUUID().toString())
 					.code("ST006")
 					.firstName("Salma")
 					.programId("BDCC")
 					.build());
 
 			studentRepository.save(Student.builder()
-					.id(UUID.randomUUID().toString())
+					//.id(UUID.randomUUID().toString())
 					.code("ST007")
 					.firstName("Hamza")
 					.programId("GLSID")
 					.build());
 
 			studentRepository.save(Student.builder()
-					.id(UUID.randomUUID().toString())
+					//.id(UUID.randomUUID().toString())
 					.code("ST008")
 					.firstName("Sara")
 					.programId("BDCC")
 					.build());
 
 			studentRepository.save(Student.builder()
-					.id(UUID.randomUUID().toString())
+					//.id(UUID.randomUUID().toString())
 					.code("ST009")
 					.firstName("Omar")
 					.programId("GLSID")
 					.build());
 
 			studentRepository.save(Student.builder()
-					.id(UUID.randomUUID().toString())
+					//.id(UUID.randomUUID().toString())
 					.code("ST010")
 					.firstName("Nadia")
 					.programId("BDCC")
