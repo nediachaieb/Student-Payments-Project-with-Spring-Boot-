@@ -29,42 +29,42 @@ public class BackendApplication {
 			// Création des étudiants
 			studentRepository.save(Student.builder()
 					//.id(UUID.randomUUID().toString())
-					.code("ST005")
+					.code("ST001")
 					.firstName("Yassine")
 					.programId("GLSID")
 					.build());
 
 			studentRepository.save(Student.builder()
 					//.id(UUID.randomUUID().toString())
-					.code("ST006")
+					.code("ST002")
 					.firstName("Salma")
 					.programId("BDCC")
 					.build());
 
 			studentRepository.save(Student.builder()
 					//.id(UUID.randomUUID().toString())
-					.code("ST007")
+					.code("ST003")
 					.firstName("Hamza")
 					.programId("GLSID")
 					.build());
 
 			studentRepository.save(Student.builder()
 					//.id(UUID.randomUUID().toString())
-					.code("ST008")
+					.code("ST004")
 					.firstName("Sara")
 					.programId("BDCC")
 					.build());
 
 			studentRepository.save(Student.builder()
 					//.id(UUID.randomUUID().toString())
-					.code("ST009")
+					.code("ST005")
 					.firstName("Omar")
 					.programId("GLSID")
 					.build());
 
 			studentRepository.save(Student.builder()
 					//.id(UUID.randomUUID().toString())
-					.code("ST010")
+					.code("ST006")
 					.firstName("Nadia")
 					.programId("BDCC")
 					.build());
