@@ -11,7 +11,9 @@ public class Payment {
     private Long id;
     private LocalDate date;
     private double amount;
+    @Enumerated(EnumType.STRING)
     private PaymentType type;
+    @Enumerated(EnumType.STRING)
     private PaymentStatus status;
     private String file;
     @ManyToOne
