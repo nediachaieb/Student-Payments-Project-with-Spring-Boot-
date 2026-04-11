@@ -1,6 +1,7 @@
 package tn.nadia.backend.controller;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.nadia.backend.entities.Payment;
@@ -141,8 +142,14 @@ public class StudentRestController {
      * Télécharger le fichier PDF associé à un paiement
      * URL : GET /payments/{id}/file
      */
-    @GetMapping(path="payments/{id}/file",produces = MediaType.APPLICATION_PDF_VALUE)
-    public byte[] getPaymentFile(@PathVariable Long id) throws IOException {
-        return paymentService.getPaymentFile(id);
+    @GetMapping(path = "payments/{id}/file")
+    public ResponseEntity<byte[]> getPaymentFile(@PathVariable Long id) throws IOException {
+
+        byte[] pdfBytes = paymentService.getPaymentFile(id);
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "inline; filename=payment.pdf")
+                .header("Content-Type", "application/pdf")
+                .body(pdfBytes);
     }
 }
