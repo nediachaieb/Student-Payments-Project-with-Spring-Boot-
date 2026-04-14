@@ -143,6 +143,10 @@ public class StudentRestController {
                 .header("Content-Type", contentType)
                 .body(studentService.readStudentPhoto(path));
     }
+    @DeleteMapping("/students/{id}")
+    public void deleteStudent(@PathVariable Long id) {
+        studentRepository.deleteById(id);
+    }
 
     // ======================= PAYMENTS ENDPOINTS =======================
 
