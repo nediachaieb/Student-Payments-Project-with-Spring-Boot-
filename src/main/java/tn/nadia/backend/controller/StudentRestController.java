@@ -143,6 +143,15 @@ public class StudentRestController {
                 .header("Content-Type", contentType)
                 .body(studentService.readStudentPhoto(path));
     }
+    @PutMapping(path = "/students/{code}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Student updateStudent(@PathVariable String code,
+                                 @RequestParam String firstName,
+                                 @RequestParam String lastName,
+                                 @RequestParam String programId,
+                                 @RequestParam MultipartFile photo) throws IOException {
+
+        return studentService.updateStudent(code, firstName, lastName, programId, photo);
+    }
     @DeleteMapping("/students/{id}")
     public void deleteStudent(@PathVariable Long id) {
         studentRepository.deleteById(id);

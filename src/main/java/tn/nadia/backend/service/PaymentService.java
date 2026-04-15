@@ -37,7 +37,7 @@ public class PaymentService {
             Files.createDirectories(folderPath);
         }
         String fileName = UUID.randomUUID().toString();
-        Path filePath = Paths.get(System.getProperty("user.home"),"enset-students","payments",fileName+".pdf");
+        Path filePath = Paths.get(System.getProperty("user.home"),"students","payments",fileName+".pdf");
         Files.copy(file.getInputStream(), filePath);
         Student  student = studentRepository.findByCode(studentCode);
         Payment payment=Payment.builder()
