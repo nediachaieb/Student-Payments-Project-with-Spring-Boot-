@@ -186,24 +186,6 @@ public class StudentRestController {
         return paymentRepository.findByStudent_Code(code);
     }
 
-    /**
-     * Récupérer les paiements selon leur statut
-     * URL : GET /paymentsByStatus?status=CREATED
-     */
-    @GetMapping("/paymentsByStatus")
-    public List<Payment> paymentsByStaus(@RequestParam PaymentStatus status){
-        return paymentRepository.findByStatus(status);
-    }
-
-    /**
-     * Mettre à jour le statut d'un paiement
-     * URL : PUT /payments/{paymentId}/updateStatus?status=VALIDATED
-     */
-    @PutMapping("/payments/{paymentId}/updateStatus")
-    public Payment updatePaymentStatus(@RequestParam PaymentStatus status,
-                                       @PathVariable Long paymentId){
-        return paymentService.updatePaymentStatus(status,paymentId);
-    }
 
     /**
      * Ajouter un nouveau paiement avec un fichier (PDF reçu)
@@ -233,5 +215,19 @@ public class StudentRestController {
                 .header("Content-Disposition", "inline; filename=payment.pdf")
                 .header("Content-Type", "application/pdf")
                 .body(pdfBytes);
+    }
+    @DeleteMapping("/payments/{id}")
+    public void deletePayment(@PathVariable Long id) {
+        paymentRepository.deleteById(id);
+    }
+    @PutMapping(path = "/payments/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Payment updatePayment(@PathVariable Long id,
+                                 @RequestParam double amount,
+                                 @RequestParam PaymentType type,
+                                 @RequestParam LocalDate date,
+                                 @RequestParam String studentCode,
+                                 @RequestParam MultipartFile file) throws IOException {
+
+        return paymentService.updatePayment(id, amount, type, date, studentCode, file);
     }
 }

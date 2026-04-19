@@ -15,6 +15,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -57,13 +58,54 @@ public class PaymentService {
         return Files.readAllBytes(Path.of(URI.create(payment.getFile())));
 
     }
+    public Payment updatePayment(Long id,
+                                 double amount,
+                                 PaymentType type,
+                                 LocalDate date,
+                                 String studentCode,
+                                 MultipartFile file) throws IOException {
 
-    public Payment updatePaymentStatus(PaymentStatus status, Long paymentId){
-        Payment payment = paymentRepository.findById(paymentId).get();
-        payment.setStatus(status);
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Payment not found"));
+
+        Student student = studentRepository.findByCode(studentCode);
+
+        if (student == null) {
+            throw new RuntimeException("Student not found");
+        }
+
+        payment.setAmount(amount);
+        payment.setType(type);
+        payment.setDate(date);
+        payment.setStudent(student);
+
+        if (file != null && !file.isEmpty()) {
+            Path folderPath = Paths.get(System.getProperty("user.home"), "students", "payments");
+
+            if (!Files.exists(folderPath)) {
+                Files.createDirectories(folderPath);
+            }
+
+            String fileName = UUID.randomUUID().toString();
+            Path filePath = folderPath.resolve(fileName + ".pdf");
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            payment.setFile(filePath.toUri().toString());
+        }
+
         return paymentRepository.save(payment);
     }
 
 
 
-}
+
+
+
+
+
+
+
+    }
+
+
+
